@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Parenting Reference Site</title>
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<body>   
+    <header>
+    <div class="bg-light collapse" id="navbarHeader" style="">
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+            <h4 class="">About</h4>
+            <p class="text-muted">As a father to be I wanted quick access parenting info that was an easy to use, accurate, and all in one place. While books, websites, and blogs are very beneficial and go into great detail, finding the info you want right when you want it becomes tedious. Remembering what book you read it in, what website you saw it on, parsing through pages of google results, etc. 
+                Those resources still have a lot of value (and our widgets link to them a ton), but we solve a different problem. We give you access to that information quickly, and then the ability to go into the details when you need.
+                Select which cards you want displayed, bookmark the url, print, etc. Because when you're parenting, you need help quick.</p>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+            <h4 class="">Contact</h4>
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item"><a href="#"><i class="fa-brands fa-square-twitter"></i></a></li>
+                <li class="list-group-item"><a href="#" class=""><i class="fa-brands fa-square-facebook"></i></a></li>
+                <li class="list-group-item"><a href="#" class=""><i class="fa fa-envelope"></i></a></li>
+            </ul>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-primary shadow-sm">
+        <div class="container">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+            <i class="fa fa-children"></i>
+            <strong>Parenting Reference Site</strong>
+        </a>
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        </div>
+    </div>
+    </header>
+
+    <main id="main"></main>
+
+    <footer class="text-muted py-3">
+    <div class="container">
+        <p class="float-end mb-1">
+        <a href="#">Back to top</a>
+        </p>
+        <p class="mb-1">Parenting Reference Site is © 2023 by some new parent</p>
+        <p class="mb-0">New to Parenting? <a href="/">Visit the homepage</a> or read our <a href="/">getting started guide</a>.</p>
+    </div>
+    </footer>
+
+
+      <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- <script src="script.js" type="text/babel"></script> -->
+
+    <script type="text/babel">
+    
+        class WidgetVM {
+            constructor(params)
+            {
+                this.category = params.category;
+                this.title = params.title;
+                this.iconClass = params.iconClass;
+                this.tips = params.tips;
+                this.sortorder = 0;
+                this.hidden = false;
+            }
+        }
+
+      function MyApp() 
+      {
+
+        let widgetCategory = {
+            BeforeBirth: 0,
+            Birth: 1,
+            Feeding: 2,
+            BreastFeeding: 3, 
+            Sleeping: 4,
+            DiaperChanging: 5,
+            Swaddling: 6,
+            CPRAndChoking: 7,
+            SignLanguage: 8,
+            ParentChecklistMonth1: 70,
+            MilestoneMonth1: 90,
+            ActivtiesMonth1: 100,
+
+        }
+
+        let widgets1 = [
+            new WidgetVM({
+                category: widgetCategory.BeforeBirth,
+                title: "Before Birth",
+                iconClass: "fa-person-pregnant",
+                tips: [
+                    new suggestionLine("When to go to the hospital", "Longer, stronger contractions. 4 minutes apart, lasting 1 minute, for 1 hour")
+                ]
+            }),
+            new WidgetVM({
+                category: widgetCategory.Birth,
+                title: "Birth",
+                iconClass: "fa-baby",
+                tips: [
+                        new suggestionLine(
+                            "Mom Hospital Bag List", 
+                            `<ul>
+                                <li>Comfy clothes</li>
+                                <li>disposable underwear</li>
+                                <li>large pads</li>
+                                <li>phone</li>
+                                <li>long charger</li>
+                                <li>water bottle</li>
+                            </ul>`
+                        ),
+                        new suggestionLine(
+                            "Dad Hospital Bag List", 
+                            `<ul>
+                                <li>Comfy clothes</li>
+                                <li>Phone</li>
+                                <li>Long charger</li>
+                                <li>Snacks</li>
+                            </ul>`
+                        ),
+                        new suggestionLine("Breathing Technique 1", "In, hold, out. Do at beginning and end of contraction."),
+                        new suggestionLine("Feather Breathing", "During a contraction. Hee, hee, hoo"),
+                    ]
+            }),
+            new WidgetVM({
+                category: widgetCategory.Feeding,
+                title: "Feeding",
+                iconClass: "fa-bottle-water",
+                tips: [
+                        new suggestionLine("Signs of Hunger", "Licking Lips & rooting -> nibbling hand -> crying"),
+                        new suggestionLine("How Often?", "Newborns usually feed every 2-3 hours"),
+                        new suggestionLine("How Much?", "Typically 2-4oz of formula or breast milk"),
+                        new suggestionLine("How long on each breast?", "15 mins"),
+                    ]
+            }),
+            new WidgetVM({
+                category: widgetCategory.BreastFeeding,
+                title: "Breast Feeding & Storage",
+                iconClass: "fa-person-breastfeeding",
+                tips: [
+                        new suggestionLine("Refrigerating", "Up to 24 hours"),
+                        new suggestionLine("Freezing", "Up to 12 months. Best to use after 6 months."),
+                        new suggestionLine("Thawing", "Place milk in pouch or bottle in bowl of warm water. Never thaw in Microwave."),
+                        new suggestionLine("Combining", "Freshly expressed milk can be added to existing milk (TODO: check stipulations)"),
+                    ]
+            }),
+            new WidgetVM({
+                category: widgetCategory.Sleeping,
+                title: "Sleeping",
+                iconClass: "fa-bed",
+                tips: [
+                        new suggestionLine("Always place on back", "Tight fitting sheets. Nothing else in crib."),
+                        new suggestionLine("Prevent Flat Head", "Rotate head to face different direction every other night"),
+                        new suggestionLine("Placing them down", "Place baby's butt first, then head when putting them down"),
+                    ]
+            }),
+            new WidgetVM({
+                category: widgetCategory.DiaperChanging,
+                title: "Diaper Changing",
+                iconClass: "fa-person-booth"
+            }),
+            new WidgetVM({
+                category: widgetCategory.Swaddling,
+                title: "Swaddling",
+                iconClass: "fa-shirt"
+            }),
+            new WidgetVM({
+                category: widgetCategory.ParentChecklistMonth1,
+                title: "Parent Checklist - Month 1",
+                iconClass: "fa-list-check"
+            }),
+            new WidgetVM({
+                category: widgetCategory.MilestoneMonth1,
+                title: "Milestones - Month 1",
+                iconClass: "fa-list-ol"
+            }),
+            new WidgetVM({
+                category: widgetCategory.ActivtiesMonth1,
+                title: "Activities - Month 1",
+                iconClass: "fa-child-reaching"
+            }),
+            new WidgetVM({
+                category: widgetCategory.CPRAndChoking,
+                title: "CPR & Choking",
+                iconClass: "fa-lungs",
+                tips: [
+                    new suggestionLine(
+                        "Choking", 
+                        `<ol>
+                            <li>Flip baby over on stomach on your forearm</li>
+                            <li>Angle down towards ground at 45 degree angle</li>
+                            <li>Use hand to slap their back</li>
+                        </ol>`
+                    ),
+                    new suggestionLine(
+                        "CPR", 
+                        `<ol>
+                            <li>Lay baby face up on flat surface</li>
+                            <li>Press on forehead and lift bottom of chin to angle head back</li>
+                            <li>Align two fingers (pointer and index) slightly below chest (even with nipples, move down a bit)</li>
+                            <li>Press firmly 12? times</li>
+                            <li>Check for breathing by putting cheek to their noise and mouth</li>
+                            <li>If not breathing, place lips around nose and their mouth and breath out deeply twice (their chest should rise)</li>
+                            <li>Repeat pushes and breathes until breathing resumes or medical help arrives</li>
+                        </ol>`
+                    )
+                ]
+            }),
+            new WidgetVM({
+                category: widgetCategory.SignLanguage,
+                title: "Sign Language",
+                iconClass: "fa-hands-asl-interpreting",
+                tips: [
+                    new suggestionLine("", "<img src='images/sign-language/test.jpg' alt='sign 1'></img>")
+                ]
+            }),
+        ];
+        let currentSortOrder = 1;
+        let id = 1;
+        widgets1.forEach(widget => {
+            widget.sortorder = currentSortOrder++;
+            widget.id = id++;
+        });
+        const [widgets, setWidgets] = React.useState(widgets1);
+        const [widgetsToDisplay, setWidgetsToDisplay] = React.useState(widgets);
+
+        let preMadeBoard = function(params)
+        {
+            this.value = params.value;
+            this.text = params.text;
+            this.includedWidgetCategories = params.includedWidgetCategories;
+        }
+
+        let preMadeBoardsInitial = [
+            new preMadeBoard({
+                value: 1,
+                text: "Preparing for Baby",
+                includedWidgetCategories: [
+                    widgetCategory.BeforeBirth
+                ]
+            }),
+            new preMadeBoard({
+                value: 2,
+                text: "Newborn",
+                includedWidgetCategories: [
+                    widgetCategory.Birth,
+                    widgetCategory.Feeding,
+                    widgetCategory.BreastFeeding,
+                    widgetCategory.DiaperChanging,
+                    widgetCategory.Sleeping,
+                    widgetCategory.ParentChecklistMonth1,
+                    widgetCategory.MilestoneMonth1,
+                    widgetCategory.ActivtiesMonth1,
+                    widgetCategory.CPRAndChoking
+                ]
+            }),
+            new preMadeBoard({
+                value: 3,
+                text: "3-6 Month Old",
+                includedWidgetCategories: [
+                    widgetCategory.Feeding,
+                    widgetCategory.BreastFeeding,
+                    widgetCategory.DiaperChanging,
+                    widgetCategory.Sleeping,
+                    widgetCategory.CPRAndChoking,
+                    widgetCategory.SignLanguage
+                ]
+            })
+        ];
+        const [premadeBoards, setPremadeBoards] = React.useState(preMadeBoardsInitial);
+        const [selectedBoard, setSelectedBoard] = React.useState("");
+
+        let widgetOrderChanged = function(widgetThatHadOrderChange, moveDirection)
+        {
+            //TODO don't like manually setting this id field to get the matching object, but it's fine for now
+            var match = widgets.filter(widget => widget.id === widgetThatHadOrderChange.id);
+            if(moveDirection == "up") match[0].sortorder-=4;
+            else if(moveDirection == "down") match[0].sortorder+=4;
+            else if(moveDirection == "left") match[0].sortorder-=2;
+            else if(moveDirection == "right") match[0].sortorder+=2;
+
+            resortWidgets();
+        }
+
+        let hide = function(widgetToHide)
+        {
+            var match = widgets.filter(widget => widget.id === widgetToHide.id);
+            match[0].hidden = true;
+
+            resortWidgets();
+        }
+
+        let unhide = function(widgetToUnhide)
+        {
+            var match = widgets.filter(widget => widget.id === widgetToUnhide.id);
+            match[0].hidden = false;
+
+            resortWidgets();
+        }
+
+        let resortWidgets = function(){
+            var matchingBoard = premadeBoards.filter(b => b.value == selectedBoard)[0];
+
+            const sorted = [...widgets.filter(w => {
+                        return !matchingBoard || matchingBoard.includedWidgetCategories.includes(w.category);
+                    })
+                ]
+                .sort((widget1, widget2) => widget1.sortorder - widget2.sortorder);
+
+
+            console.table(sorted);
+            setWidgetsToDisplay(sorted);
+        }
+
+        let onPremadeBoardSelectionChange = function(event){
+            console.log("Board changed", event.target.value);
+            setSelectedBoard(event.target.value);
+        }
+
+        React.useEffect(() => {
+            console.log("Board State changed", selectedBoard);
+
+            resortWidgets();
+        }, [selectedBoard])
+
+        return (
+            <React.Fragment>
+                <section className="py-1 text-center container">
+                    <div className="row py-lg-1">
+                        <div className="col-lg-10 col-md-8 mx-auto">
+                            <h1 className="fw-light">Parenting & Child Tips, Now</h1>
+                            <p className="lead text-muted">Help when you need it. We offer quick reference parenting & child tips all in one place. Simple and easy to use. Organize. Search. Bookmark. Print.</p>
+                            <a href="#" className="btn btn-primary my-2" onClick={() => window.print()}>Print Page</a>
+                            <a href="#" className="btn btn-secondary my-2">Submit Tip</a>
+                        </div>
+                        <div className="col-lg-2 col-md-4 mx-auto">
+                            <h1 className="fw-light">Upcoming Features</h1>
+                            <p className="lead text-muted">
+                                <ul className="text-start">
+                                    <li>Save preferences</li>
+                                    <li>Quick search all widgets</li>
+                                    <li>Better sorting</li>
+                                    <li>Email subscription (alerts when we add new content)</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <div className="album py-1 bg-light">
+                    <div className="container-fluid">   
+                        <div className="row pb-3">
+                            <div className="col-8">
+                                <div className="row">
+                                    <div className="col-2 g-1">
+                                    <label className="form-label">Hidden Widgets</label>
+                                    </div>
+                                    <div className="col-10 g-0">
+                                        {widgetsToDisplay.filter(widget => widget.hidden === true).map((widget) => 
+                                            <button className="btn btn-sm btn-outline-secondary" onClick={() => unhide(widget)}><i className="fa fa-eye" style={{cursor:"pointer"}}></i> {widget.title}</button>
+                                        )} 
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-4">
+                                <div className="row">
+                                    <div className="col-4">
+                                    <label className="form-label">Premade Boards</label>
+                                    </div>
+                                    <div className="col-8">
+                                        <select className="form-select" onChange={onPremadeBoardSelectionChange}>
+                                            <option value=""></option>
+                                            {premadeBoards.map(premadeBoard => 
+                                                <option value={premadeBoard.value}>{premadeBoard.text}</option>
+                                            )}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">           
+                                {widgetsToDisplay.filter(widget => widget.hidden === false).map((widget) => 
+                                    <InfoCard {...widget} onSortChanged={widgetOrderChanged} onHide={hide}></InfoCard>
+                                )} 
+                            </div>    
+                    </div>
+                </div>
+                
+            </React.Fragment>
+        );
+      }
+
+      let suggestionLine = function(title, body, bodySublist)
+      {
+            this.title = title;
+            this.body = body;
+            this.bodySublist = bodySublist;
+      }
+
+      function InfoCard(props) 
+      {
+        const listItems = props.tips && props.tips.map((tip) =>
+            <li className="list-group-item">
+                <strong>{tip.title}</strong> <span dangerouslySetInnerHTML={{__html: tip.body}}></span>
+            </li>
+        );
+         
+        
+
+        let upArrow = function()
+        {
+            props.onSortChanged(props, "up");
+        }
+
+        let downArrow = function()
+        {
+            props.onSortChanged(props, "down");
+
+        }
+
+        let leftArrow = function()
+        {
+            props.onSortChanged(props, "left");
+
+        }
+
+        let rightArrow = function()
+        {
+            props.onSortChanged(props, "right");
+        }
+
+        return  (
+            <div className="col">
+                <div className="card">
+                    <div className="card-header text-white bg-primary">
+                        <div className="float-start">
+                            <h5 className="text-center">
+                                <i className={"fa " + props.iconClass + " text-start"}></i> {props.title}
+                            </h5>
+                        </div>
+                        <div className="float-end">
+                            <i className="fa fa-arrow-left p-2" style={{cursor: "pointer"}} onClick={leftArrow}></i>          
+                            <i className="fa fa-arrow-up p-2" style={{cursor: "pointer"}} onClick={upArrow}></i>
+                            <i className="fa fa-arrow-down p-2" style={{cursor: "pointer"}} onClick={downArrow}></i>
+                            <i className="fa fa-arrow-right p-2" style={{cursor: "pointer"}} onClick={rightArrow}></i> 
+                            <i className="fa fa-eye-slash p-2" style={{cursor: "pointer"}} onClick={() => props.onHide(props)}></i> 
+                        </div>
+                    </div>
+                    <ul className="list-group list-group-flush">
+                        {listItems}
+                    </ul>
+                    <div className="card-footer text-white bg-primary text-muted text-center">
+                        {props.footer}
+                    </div>
+                </div>
+            </div>
+        )
+
+      }
+
+      const container = document.getElementById('main');
+      const root = ReactDOM.createRoot(container);
+      root.render(<MyApp />);
+
+    </script>
+</body>
+</html>
