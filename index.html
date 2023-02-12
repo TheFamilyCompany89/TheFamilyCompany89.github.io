@@ -71,7 +71,16 @@
         
     </script>
 
-    <script type="text/babel">      
+    <script type="text/babel">   
+        /*
+        * TODO:
+        * - Only store preferences of widgets that have changed
+        * - Quick search
+        * - Better sorting
+        * - Email subscription
+        * - Finish subclassing all widgets
+        * - Separate JS code out into modules
+        */
       class WidgetVM {
             constructor(params)
             {
@@ -105,8 +114,8 @@
 
         class Preferences {
             constructor(params){
-                this.premadeBoardValue = params.premadeBoardValue;
-                this.widgetCategoriesAndState = params.widgetCategoriesAndState;
+                this.premadeBoardValue = params.premadeBoardValue || "";
+                this.widgetCategoriesAndState = params.widgetCategoriesAndState || [];
             }
         }
 
@@ -137,7 +146,6 @@
 
             save(widgetVMs, premadeBoardValue)
             {
-                debugger;
                 var prefs = new Preferences({
                     premadeBoardValue: premadeBoardValue,
                     widgetCategoriesAndState: widgetVMs.map(vm => new WidgetCategoriesAndState({
@@ -160,6 +168,42 @@
 
             clear(){
                localStorage.setItem(PreferencesRepository.preferencesStorageKey, null); 
+            }
+        }
+
+        class UrlPreferencesHelper {
+            constructor(){}
+
+            set(preferences){
+                const urlParams = new URLSearchParams(window.location.search);
+
+                if(preferences){
+                    urlParams.set("preferences", encodeURIComponent(JSON.stringify(preferences)));
+                }
+
+                window.location.search = urlParams;
+            }
+
+            clear(){
+                var urlParams = new URLSearchParams(window.location.search)
+                urlParams.set("preferences","");
+
+                window.location.search = urlParams;
+            }
+
+            get(){
+                var preferencesfromUrl = new URLSearchParams(window.location.search).get("preferences");
+                if(!preferencesfromUrl) return new Preferences({});
+
+                var jsonPreferences = decodeURIComponent(preferencesfromUrl);
+                var parsedPreferences = JSON.parse(jsonPreferences);
+
+                var preferences = new Preferences({
+                    premadeBoardValue: parsedPreferences.premadeBoardValue,
+                    widgetCategoriesAndState: parsedPreferences.widgetCategoriesAndState
+                });
+
+                return preferences;
             }
         }
 
@@ -304,7 +348,6 @@
             getWithPreferences(preferences){
                 let allWidgets = this.get();
 
-                debugger;
                 if(!preferences) return allWidgets;
 
                 allWidgets.forEach(vm => {
@@ -319,11 +362,28 @@
                 return allWidgets;
             }
         }
+
+        class PreferencesLoader{
+            constructor(urlPreferencesHelper, preferencesRepository){
+                this.urlPreferencesHelper = urlPreferencesHelper;
+                this.preferencesRepository = preferencesRepository;
+            }
+
+            load(){
+                var preferences = this.preferencesRepository.get();
+
+                if(!preferences) preferences = this.urlPreferencesHelper.get();
+
+                return preferences || new Preferences({premadeBoardValue: "", widgetCategoriesAndState:[]});
+            }
+        }
       
       function MyApp() 
       {
+        let urlPreferencesHelper = new UrlPreferencesHelper();
         let preferencesRepository = new PreferencesRepository();
-        let preferences = preferencesRepository.get() || new Preferences({premadeBoardValue: "", widgetCategoriesAndState:[]});
+        let preferencesLoader = new PreferencesLoader(urlPreferencesHelper, preferencesRepository);
+        let preferences = preferencesLoader.load();
 
         let widgetsRepository = new WidgetsRepository();
         let allWidgets = widgetsRepository.getWithPreferences(preferences);
@@ -422,16 +482,32 @@
 
         let resetPreferences = function(){
             preferencesRepository.clear();
-            location.reload();
+            urlPreferencesHelper.clear();
+            //window.location = window.location.href;
             // TODO make the below work so don't have to do a page refresh
-/*             
-var widgets = widgetsRepository.get();
+            /*             
+            var widgets = widgetsRepository.get();
             setWidgets(widgets);
 
             let preferences = preferencesRepository.get();
             if(!preferences) return;
 
             setPremadeBoards(preferences.premadeBoardValue || ""); */
+        }
+
+        let bookmark = function(){
+            urlPreferencesHelper.set(preferencesRepository.get());
+
+            if (window.sidebar && window.sidebar.addPanel) { // Mozilla Firefox Bookmark
+                window.sidebar.addPanel(document.title, window.location.href, '');
+            } else if (window.external && ('AddFavorite' in window.external)) { // IE Favorite
+                window.external.AddFavorite(location.href, document.title);
+            } else if (window.opera && window.print) { // Opera Hotlist
+                this.title = document.title;
+            return true;
+            } else { // webkit - safari/chrome
+                alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Command/Cmd' : 'CTRL') + ' + D to bookmark this page.');
+            }
         }
 
         let onPremadeBoardSelectionChange = function(event){
@@ -454,6 +530,7 @@ var widgets = widgetsRepository.get();
                             <p className="lead text-muted">Help when you need it. We offer quick reference parenting & child tips all in one place. Simple and easy to use. Organize. Search. Bookmark. Print.</p>
                             <a href="#" className="btn btn-primary my-2" onClick={() => window.print()}>Print Page</a>
                             <a href="#" className="btn btn-secondary my-2">Submit Tip</a>
+                            <a href="#" className="btn btn-light my-2" onClick={bookmark}>Bookmark</a>
                             <a href="#" className="btn btn-outline-secondary my-2" onClick={resetPreferences}>Reset Preferences</a>
                         </div>
                         <div className="col-lg-2 col-md-4 mx-auto">
