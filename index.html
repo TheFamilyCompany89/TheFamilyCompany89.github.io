@@ -67,6 +67,9 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="script.js"></script>
+    <script>
+        
+    </script>
 
     <script type="text/babel">      
       class WidgetVM {
@@ -100,6 +103,21 @@
             }
         }
 
+        class Preferences {
+            constructor(params){
+                this.premadeBoardValue = params.premadeBoardValue;
+                this.widgetCategoriesAndState = params.widgetCategoriesAndState;
+            }
+        }
+
+        class WidgetCategoriesAndState {
+            constructor(widgetVM){
+                this.category = widgetVM.category;
+                this.sortorder = widgetVM.sortorder;
+                this.hidden = widgetVM.hidden;
+            }
+        }
+
         class BeforeBirthWidget extends WidgetVM {
             constructor(){
                 super({
@@ -112,140 +130,204 @@
                 })
             }
         }
+
+        class PreferencesRepository {
+            static preferencesStorageKey = "PREFERENCES";
+            constructor(){}
+
+            save(widgetVMs, premadeBoardValue)
+            {
+                debugger;
+                var prefs = new Preferences({
+                    premadeBoardValue: premadeBoardValue,
+                    widgetCategoriesAndState: widgetVMs.map(vm => new WidgetCategoriesAndState({
+                        category: vm.category,
+                        sortorder: vm.sortorder,
+                        hidden: vm.hidden
+                    }))
+                });
+
+                localStorage.setItem(PreferencesRepository.preferencesStorageKey, JSON.stringify(prefs));
+            }
+
+            get()
+            {         
+                let preferencesAsJsonString = localStorage.getItem(PreferencesRepository.preferencesStorageKey);
+                if(preferencesAsJsonString)return JSON.parse(preferencesAsJsonString);
+
+                return null;
+            }
+
+            clear(){
+               localStorage.setItem(PreferencesRepository.preferencesStorageKey, null); 
+            }
+        }
+
+        class WidgetsRepository {
+            cosntructor(){}
+
+            get(){
+                let allWidgets = [
+                    new BeforeBirthWidget(),
+                    new WidgetVM({
+                        category: WidgetCategory.Birth,
+                        title: "Birth",
+                        iconClass: "fa-baby",
+                        tips: [
+                                new suggestionLine(
+                                    "Mom Hospital Bag List", 
+                                    `<ul>
+                                        <li>Comfy clothes</li>
+                                        <li>disposable underwear</li>
+                                        <li>large pads</li>
+                                        <li>phone</li>
+                                        <li>long charger</li>
+                                        <li>water bottle</li>
+                                    </ul>`
+                                ),
+                                new suggestionLine(
+                                    "Dad Hospital Bag List", 
+                                    `<ul>
+                                        <li>Comfy clothes</li>
+                                        <li>Phone</li>
+                                        <li>Long charger</li>
+                                        <li>Snacks</li>
+                                    </ul>`
+                                ),
+                                new suggestionLine("Breathing Technique 1", "In, hold, out. Do at beginning and end of contraction."),
+                                new suggestionLine("Feather Breathing", "During a contraction. Hee, hee, hoo"),
+                            ]
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.Feeding,
+                        title: "Feeding",
+                        iconClass: "fa-bottle-water",
+                        tips: [
+                                new suggestionLine("Signs of Hunger", "Licking Lips & rooting -> nibbling hand -> crying"),
+                                new suggestionLine("How Often?", "Newborns usually feed every 2-3 hours"),
+                                new suggestionLine("How Much?", "Typically 2-4oz of formula or breast milk"),
+                                new suggestionLine("How long on each breast?", "15 mins"),
+                            ]
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.BreastFeeding,
+                        title: "Breast Feeding & Storage",
+                        iconClass: "fa-person-breastfeeding",
+                        tips: [
+                                new suggestionLine("Refrigerating", "Up to 24 hours"),
+                                new suggestionLine("Freezing", "Up to 12 months. Best to use after 6 months."),
+                                new suggestionLine("Thawing", "Place milk in pouch or bottle in bowl of warm water. Never thaw in Microwave."),
+                                new suggestionLine("Combining", "Freshly expressed milk can be added to existing milk (TODO: check stipulations)"),
+                            ]
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.Sleeping,
+                        title: "Sleeping",
+                        iconClass: "fa-bed",
+                        tips: [
+                                new suggestionLine("Always place on back", "Tight fitting sheets. Nothing else in crib."),
+                                new suggestionLine("Prevent Flat Head", "Rotate head to face different direction every other night"),
+                                new suggestionLine("Placing them down", "Place baby's butt first, then head when putting them down"),
+                            ]
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.DiaperChanging,
+                        title: "Diaper Changing",
+                        iconClass: "fa-person-booth"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.Swaddling,
+                        title: "Swaddling",
+                        iconClass: "fa-shirt"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ParentChecklistMonth1,
+                        title: "Parent Checklist - Month 1",
+                        iconClass: "fa-list-check"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth1,
+                        title: "Milestones - Month 1",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth1,
+                        title: "Activities - Month 1",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.CPRAndChoking,
+                        title: "CPR & Choking",
+                        iconClass: "fa-lungs",
+                        tips: [
+                            new suggestionLine(
+                                "Choking", 
+                                `<ol>
+                                    <li>Flip baby over on stomach on your forearm</li>
+                                    <li>Angle down towards ground at 45 degree angle</li>
+                                    <li>Use hand to slap their back</li>
+                                </ol>`
+                            ),
+                            new suggestionLine(
+                                "CPR", 
+                                `<ol>
+                                    <li>Lay baby face up on flat surface</li>
+                                    <li>Press on forehead and lift bottom of chin to angle head back</li>
+                                    <li>Align two fingers (pointer and index) slightly below chest (even with nipples, move down a bit)</li>
+                                    <li>Press firmly 12? times</li>
+                                    <li>Check for breathing by putting cheek to their noise and mouth</li>
+                                    <li>If not breathing, place lips around nose and their mouth and breath out deeply twice (their chest should rise)</li>
+                                    <li>Repeat pushes and breathes until breathing resumes or medical help arrives</li>
+                                </ol>`
+                            )
+                        ]
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.SignLanguage,
+                        title: "Sign Language",
+                        iconClass: "fa-hands-asl-interpreting",
+                        tips: [
+                            new suggestionLine("", "<img src='images/sign-language/test.jpg' alt='sign 1'></img>")
+                        ]
+                    }),
+                ];
+                let currentSortOrder = 1;
+                let id = 1;
+                allWidgets.forEach(widget => {
+                    widget.sortorder = currentSortOrder++;
+                    widget.id = id++;
+                });
+
+                return allWidgets;
+            }
+
+            getWithPreferences(preferences){
+                let allWidgets = this.get();
+
+                debugger;
+                if(!preferences) return allWidgets;
+
+                allWidgets.forEach(vm => {
+                        var preferenceForWidget = preferences.widgetCategoriesAndState.find(p => p.category.id == vm.category.id);
+
+                        if(preferenceForWidget){
+                            vm.sortorder = preferenceForWidget.sortorder;
+                            vm.hidden = preferenceForWidget.hidden;
+                        }
+                    });
+
+                return allWidgets;
+            }
+        }
       
       function MyApp() 
       {
+        let preferencesRepository = new PreferencesRepository();
+        let preferences = preferencesRepository.get() || new Preferences({premadeBoardValue: "", widgetCategoriesAndState:[]});
 
-        let allWidgets = [
-            new BeforeBirthWidget(),
-            new WidgetVM({
-                category: WidgetCategory.Birth,
-                title: "Birth",
-                iconClass: "fa-baby",
-                tips: [
-                        new suggestionLine(
-                            "Mom Hospital Bag List", 
-                            `<ul>
-                                <li>Comfy clothes</li>
-                                <li>disposable underwear</li>
-                                <li>large pads</li>
-                                <li>phone</li>
-                                <li>long charger</li>
-                                <li>water bottle</li>
-                            </ul>`
-                        ),
-                        new suggestionLine(
-                            "Dad Hospital Bag List", 
-                            `<ul>
-                                <li>Comfy clothes</li>
-                                <li>Phone</li>
-                                <li>Long charger</li>
-                                <li>Snacks</li>
-                            </ul>`
-                        ),
-                        new suggestionLine("Breathing Technique 1", "In, hold, out. Do at beginning and end of contraction."),
-                        new suggestionLine("Feather Breathing", "During a contraction. Hee, hee, hoo"),
-                    ]
-            }),
-            new WidgetVM({
-                category: WidgetCategory.Feeding,
-                title: "Feeding",
-                iconClass: "fa-bottle-water",
-                tips: [
-                        new suggestionLine("Signs of Hunger", "Licking Lips & rooting -> nibbling hand -> crying"),
-                        new suggestionLine("How Often?", "Newborns usually feed every 2-3 hours"),
-                        new suggestionLine("How Much?", "Typically 2-4oz of formula or breast milk"),
-                        new suggestionLine("How long on each breast?", "15 mins"),
-                    ]
-            }),
-            new WidgetVM({
-                category: WidgetCategory.BreastFeeding,
-                title: "Breast Feeding & Storage",
-                iconClass: "fa-person-breastfeeding",
-                tips: [
-                        new suggestionLine("Refrigerating", "Up to 24 hours"),
-                        new suggestionLine("Freezing", "Up to 12 months. Best to use after 6 months."),
-                        new suggestionLine("Thawing", "Place milk in pouch or bottle in bowl of warm water. Never thaw in Microwave."),
-                        new suggestionLine("Combining", "Freshly expressed milk can be added to existing milk (TODO: check stipulations)"),
-                    ]
-            }),
-            new WidgetVM({
-                category: WidgetCategory.Sleeping,
-                title: "Sleeping",
-                iconClass: "fa-bed",
-                tips: [
-                        new suggestionLine("Always place on back", "Tight fitting sheets. Nothing else in crib."),
-                        new suggestionLine("Prevent Flat Head", "Rotate head to face different direction every other night"),
-                        new suggestionLine("Placing them down", "Place baby's butt first, then head when putting them down"),
-                    ]
-            }),
-            new WidgetVM({
-                category: WidgetCategory.DiaperChanging,
-                title: "Diaper Changing",
-                iconClass: "fa-person-booth"
-            }),
-            new WidgetVM({
-                category: WidgetCategory.Swaddling,
-                title: "Swaddling",
-                iconClass: "fa-shirt"
-            }),
-            new WidgetVM({
-                category: WidgetCategory.ParentChecklistMonth1,
-                title: "Parent Checklist - Month 1",
-                iconClass: "fa-list-check"
-            }),
-            new WidgetVM({
-                category: WidgetCategory.MilestoneMonth1,
-                title: "Milestones - Month 1",
-                iconClass: "fa-list-ol"
-            }),
-            new WidgetVM({
-                category: WidgetCategory.ActivtiesMonth1,
-                title: "Activities - Month 1",
-                iconClass: "fa-child-reaching"
-            }),
-            new WidgetVM({
-                category: WidgetCategory.CPRAndChoking,
-                title: "CPR & Choking",
-                iconClass: "fa-lungs",
-                tips: [
-                    new suggestionLine(
-                        "Choking", 
-                        `<ol>
-                            <li>Flip baby over on stomach on your forearm</li>
-                            <li>Angle down towards ground at 45 degree angle</li>
-                            <li>Use hand to slap their back</li>
-                        </ol>`
-                    ),
-                    new suggestionLine(
-                        "CPR", 
-                        `<ol>
-                            <li>Lay baby face up on flat surface</li>
-                            <li>Press on forehead and lift bottom of chin to angle head back</li>
-                            <li>Align two fingers (pointer and index) slightly below chest (even with nipples, move down a bit)</li>
-                            <li>Press firmly 12? times</li>
-                            <li>Check for breathing by putting cheek to their noise and mouth</li>
-                            <li>If not breathing, place lips around nose and their mouth and breath out deeply twice (their chest should rise)</li>
-                            <li>Repeat pushes and breathes until breathing resumes or medical help arrives</li>
-                        </ol>`
-                    )
-                ]
-            }),
-            new WidgetVM({
-                category: WidgetCategory.SignLanguage,
-                title: "Sign Language",
-                iconClass: "fa-hands-asl-interpreting",
-                tips: [
-                    new suggestionLine("", "<img src='images/sign-language/test.jpg' alt='sign 1'></img>")
-                ]
-            }),
-        ];
-        let currentSortOrder = 1;
-        let id = 1;
-        allWidgets.forEach(widget => {
-            widget.sortorder = currentSortOrder++;
-            widget.id = id++;
-        });
+        let widgetsRepository = new WidgetsRepository();
+        let allWidgets = widgetsRepository.getWithPreferences(preferences);
+
         const [widgets, setWidgets] = React.useState(allWidgets);
         const [widgetsToDisplay, setWidgetsToDisplay] = React.useState(widgets);
 
@@ -293,7 +375,7 @@
             })
         ];
         const [premadeBoards, setPremadeBoards] = React.useState(preMadeBoardsInitial);
-        const [selectedBoard, setSelectedBoard] = React.useState("");
+        const [selectedBoard, setSelectedBoard] = React.useState(preferences.premadeBoardValue || "");
 
         let widgetOrderChanged = function(widgetThatHadOrderChange, moveDirection)
         {
@@ -335,6 +417,21 @@
 
             console.table(sorted);
             setWidgetsToDisplay(sorted);
+            preferencesRepository.save(sorted, selectedBoard);
+        }
+
+        let resetPreferences = function(){
+            preferencesRepository.clear();
+            location.reload();
+            // TODO make the below work so don't have to do a page refresh
+/*             
+var widgets = widgetsRepository.get();
+            setWidgets(widgets);
+
+            let preferences = preferencesRepository.get();
+            if(!preferences) return;
+
+            setPremadeBoards(preferences.premadeBoardValue || ""); */
         }
 
         let onPremadeBoardSelectionChange = function(event){
@@ -357,6 +454,7 @@
                             <p className="lead text-muted">Help when you need it. We offer quick reference parenting & child tips all in one place. Simple and easy to use. Organize. Search. Bookmark. Print.</p>
                             <a href="#" className="btn btn-primary my-2" onClick={() => window.print()}>Print Page</a>
                             <a href="#" className="btn btn-secondary my-2">Submit Tip</a>
+                            <a href="#" className="btn btn-outline-secondary my-2" onClick={resetPreferences}>Reset Preferences</a>
                         </div>
                         <div className="col-lg-2 col-md-4 mx-auto">
                             <h1 className="fw-light">Upcoming Features</h1>
@@ -393,7 +491,7 @@
                                     <label className="form-label">Premade Boards</label>
                                     </div>
                                     <div className="col-8">
-                                        <select className="form-select" onChange={onPremadeBoardSelectionChange}>
+                                        <select className="form-select" onChange={onPremadeBoardSelectionChange} value={selectedBoard}>
                                             <option value=""></option>
                                             {premadeBoards.map(premadeBoard => 
                                                 <option value={premadeBoard.value}>{premadeBoard.text}</option>
