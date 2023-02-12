@@ -773,6 +773,11 @@
             props.onSortChanged(props, "right");
         }
 
+        const [contentHidden, setContentHidden] = React.useState(false);
+        let minimize = function(){
+            setContentHidden(!!!contentHidden);
+        }
+
         return  (
             <div className="col">
                 <div className="card">
@@ -787,10 +792,11 @@
                             <i className="fa fa-arrow-up p-2" style={{cursor: "pointer"}} onClick={upArrow}></i>
                             <i className="fa fa-arrow-down p-2" style={{cursor: "pointer"}} onClick={downArrow}></i>
                             <i className="fa fa-arrow-right p-2" style={{cursor: "pointer"}} onClick={rightArrow}></i> 
+                            <i className="fa fa-window-minimize p-2" title="minimize" style={{cursor: "pointer"}} onClick={minimize}></i> 
                             <i className="fa fa-eye-slash p-2" style={{cursor: "pointer"}} onClick={() => props.onHide(props)}></i> 
                         </div>
                     </div>
-                    <ul className="list-group list-group-flush">
+                    <ul className={"list-group list-group-flush" + (contentHidden ? " d-none" : "")}>
                         {listItems}
                     </ul>
                     <div className="card-footer text-white bg-primary text-muted text-center">
