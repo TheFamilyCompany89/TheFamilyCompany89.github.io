@@ -720,11 +720,6 @@
             resortWidgets();
         }, [selectedBoard])
 
-        const [displayHeader, setDisplayHeader] = React.useState(false);
-        let minimizeHeader = function(){
-            setDisplayHeader(!!!displayHeader);
-        }
-
         const [searchValue, setSearchValue] = React.useState("");
         let searchChanged = function(event){
             setSearchValue(event.target.value);
@@ -748,35 +743,50 @@
 
         return (
             <React.Fragment>
-                <section className="py-1 text-center container">
-                    <div className={"row py-lg-1" + (displayHeader ? "" : " d-none")}>
-                        <div className="col-lg-6 col-md-8 mx-auto">
-                            <h1 className="fw-light">Parenting & Child Tips, Now</h1>
-                            <p className="lead text-muted">Help when you need it. We offer quick reference parenting & child tips all in one place. Simple and easy to use. Organize. Search. Bookmark. Print.</p> 
-                        </div>                      
-                    </div>
-                    <div className="row">
-                        <i className="fa fa-window-minimize" title="minimize" style={{cursor: "pointer"}} onClick={minimizeHeader}></i> 
+                <section className="">             
+                    <div className="accordion" id="accordionExample">
+                        <div className="accordion-item">
+                            <h2 className="accordion-header" id="headingOne">
+                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Site Info
+                                </button>
+                            </h2>
+                            <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne">
+                                <div className="accordion-body text-center">
+                                    <h1 className="fw-light">Parenting & Child Tips, Now</h1>
+                                    <p className="lead text-muted">Help when you need it. We offer quick reference parenting & child tips all in one place. Simple and easy to use. Organize. Search. Bookmark. Print.</p> 
+                                </div>
+                            </div>
+                        </div>
+                        <div className="accordion-item">
+                            <h2 className="accordion-header" id="headingTwo">
+                                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Settings, Print, Bookmark
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo">
+                                <div className="text-center">
+                                    <div className="col">
+                                        <button type="button" className="btn btn-secondary btn-block col-lg-2 col-sm-6 col-12 m-md-2 my-2 mx-0" onClick={() => window.print()}>
+                                        <i className="fa fa-print"></i> Print
+                                        </button>
+                                        <button type="button" className="btn btn-secondary btn-block col-lg-2 col-sm-6 col-12 m-md-2 my-2 mx-0" onClick={bookmark}>
+                                            <i className="fa fa-bookmark"></i> Bookmark
+                                        </button>
+                                        <button type="button" className="btn btn-secondary btn-block col-lg-2 col-sm-6 col-12 m-md-2 my-2 mx-0" onClick={resetPreferences}>
+                                            <i className="fa fa-rotate-left"></i> Reset Preferences
+                                        </button>
+                                        <button type="button" className="btn btn-outline-secondary btn-block col-lg-2 col-sm-6 col-12 m-md-2 my-2 mx-0">
+                                            <i className="fa fa-square-arrow-up-right"></i> Submit Tip
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                       
                     </div>
                 </section>
-                <section className="text-center">
-                    <div className="row">
-                        <div className="col">
-                            <button type="button" className="btn btn-secondary btn-block col-lg-2 col-sm-6 col-12 m-2" onClick={() => window.print()}>
-                               <i className="fa fa-print"></i> Print
-                            </button>
-                            <button type="button" className="btn btn-secondary btn-block col-lg-2 col-sm-6 col-12 m-2" onClick={bookmark}>
-                                <i className="fa fa-bookmark"></i> Bookmark
-                            </button>
-                            <button type="button" className="btn btn-secondary btn-block col-lg-2 col-sm-6 col-12 m-2" onClick={resetPreferences}>
-                                <i className="fa fa-rotate-left"></i> Reset Preferences
-                            </button>
-                            <button type="button" className="btn btn-outline-secondary btn-block col-lg-2 col-sm-6 col-12 m-2">
-                                <i className="fa fa-square-arrow-up-right"></i> Submit Tip
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
+                <section className="text-center py-2">
+                    <div className="row justify-content-center">
                         <div className="col-lg-2 col-sm-6 col-12 my-2">
                             <input type="search" className="form-control" value={searchValue} onChange={searchChanged} placeholder="Type to search..."></input>
                         </div>
