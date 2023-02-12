@@ -67,9 +67,6 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="script.js"></script>
-    <script>
-        
-    </script>
 
     <script type="text/babel">   
         /*
@@ -134,7 +131,56 @@
                     title: "Before Birth",
                     iconClass: "fa-person-pregnant",
                     tips: [
-                        new suggestionLine("When to go to the hospital", "Longer, stronger contractions. 4 minutes apart, lasting 1 minute, for 1 hour")
+                        new suggestionLine(
+                            "Perineal Massage",
+                            "Helps to prevent tearing <sup><a href='https://americanpregnancy.org/healthy-pregnancy/labor-and-birth/perineal-massage-pregnancy/' target='_blank'>1</a</sup>"
+                        ),
+                        new suggestionLine("When to go to the hospital", "Longer, stronger contractions. 4 minutes apart, lasting 1 minute, for 1 hour"),
+                        new suggestionLine(
+                            "False Labor (Braxton Hicks)",
+                            "Irregular in duration & intensity. Infrequent & unpredictable. <sup><a href='https://www.ncbi.nlm.nih.gov/books/NBK470546/' target='_blank'>1</a></sup>"
+                        ),
+                        new suggestionLine(
+                            "Birth Plan - What to include:",
+                            `<ul>
+                                <li>Your Name</li>
+                                <li>First time giving borth?</li>
+                                <li>Planned Birth type (vaginal or c-section)</li>
+                                <li>Mom Blood Type</li>
+                                <li>Mom Allergies</li>
+                                <li>Mom Medications</li>
+                                <li>People Allowed in Room during labor</li>
+                                <li><strong>During Labor Medication Preferences</strong> Natural? Epidural? Laughing Gas (Nitrous Oxide)?</li>
+                                <li>How long to delay cord clamping?</li>
+                                <li>Who cuts umbilical cord?</li>
+                                <li>Immediate skin to skin?</li>
+                                <li>Planned Feeding Type? (formula or breast)</li>
+                                <li>Pediatrician Contact Information</li>
+                                <li>C-Section Choices
+                                    <ul>
+                                        <li>Want your support person in room?</li>
+                                        <li>Private drape or clear drape?</li>
+                                        <li>Want skin to skin right away?</li>
+                                    </ul>
+                                </li>
+                            </ul>`
+                        ),
+                        new suggestionLine(
+                            "Baby Positioning",
+                            `<ul>
+                                <li>Baby should be in head down position by 36 weeks</li>
+                                <li>Ideally facing down and back</li>
+                                <li><strong>Breech</strong> = feet or bottom down <sup><a href='https://my.clevelandclinic.org/health/diseases/21848-breech-baby' target='_blank'>1</a></sup></li>
+                                <li>Helping to get into position
+                                    <ul>
+                                        <li>Sit straight up w/knees open</li>
+                                        <li>Stretch on all fours in yoga position</li>
+                                        <li>Lean forward to 45 degree angle, bending at hips, when standing or sitting against counter or chair</li>
+                                    </ul>
+                                </li>
+                            </ul>`
+                            
+                        )
                     ]
                 })
             }
@@ -221,25 +267,131 @@
                                 new suggestionLine(
                                     "Mom Hospital Bag List", 
                                     `<ul>
-                                        <li>Comfy clothes</li>
-                                        <li>disposable underwear</li>
-                                        <li>large pads</li>
-                                        <li>phone</li>
-                                        <li>long charger</li>
-                                        <li>water bottle</li>
+                                        <li>
+                                            Paperwork
+                                            <ul>
+                                                <li>IDentification</li>
+                                                <li>Insurance Card</li>
+                                                <li>Birth plan</li>
+                                                <li>Pediatrician Contact Information</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            Clothing
+                                            <ul>
+                                                <li>Nursing Bra</li>
+                                                <li>Pajamas</li>
+                                                <li>Robe</li>
+                                                <li>Comfortable going home outfit</li>
+                                                <li>Slipper Socks</li>
+                                                <li>Slip on shoes</li>
+                                                <li>Shower shoes</li>
+                                                <li>Disposable Underwear</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            Toiletries
+                                            <ul>
+                                                <li>Toothbrush</li>
+                                                <li>Toothpaste</li>
+                                                <li>Soap</li>
+                                                <li>Makeup Wipes</li>
+                                                <li>Deoderant</li>
+                                                <li>Hair ties/headband</li>
+                                                <li>Hair comb/brush</li>
+                                                <li>Lip balm</li>
+                                                <li>Lotion</li>
+                                                <li>Glasses/contacts</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            Postpartum Needs - Most hospitals provide
+                                            <ul>
+                                                <li>Nipple Cream</li>
+                                                <li>Nipple Pads</li>
+                                                <li>Adult Diapers</li>
+                                                <li>Heavy,Medium,Light pads</li>
+                                                <li>Peri bottle</li>
+                                                <li>Perineal Spray</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            Extras
+                                            <ul>
+                                                <li>Phone</li>
+                                                <li>Long charging cable</li>
+                                                <li>Water Bottle</li>
+                                                <li>Pillow?</li>
+                                                <li>Bath towel?</li>
+                                            </ul>
+                                        </li>
                                     </ul>`
                                 ),
                                 new suggestionLine(
+                                    "Baby Hospital Bag List", 
+                                    `<ul>
+                                        <li>Car Seat</li>
+                                        <li>Going Home Outfit</li>
+                                    </ul>`
+                                ), 
+                                new suggestionLine(
                                     "Dad Hospital Bag List", 
                                     `<ul>
-                                        <li>Comfy clothes</li>
+                                        <li>Clothes</li>
+                                        <li>Pajamas</li>
+                                        <li>Pillow</li>
+                                        <li>Sheets</li>
+                                        <li>Toiletries</li>
+                                        <li>Watter Bottle</li>
                                         <li>Phone</li>
                                         <li>Long charger</li>
                                         <li>Snacks</li>
                                     </ul>`
-                                ),
+                                ),                               
                                 new suggestionLine("Breathing Technique 1", "In, hold, out. Do at beginning and end of contraction."),
                                 new suggestionLine("Feather Breathing", "During a contraction. Hee, hee, hoo"),
+                            ]
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.Birth,
+                        title: "Birth Stages",
+                        iconClass: "fa-baby",
+                        tips: [
+                                new suggestionLine(
+                                    "Stage 1: Labor <sup><a href='https://my.clevelandclinic.org/health/symptoms/22640-stages-of-labor' target='_blank'>1</a></sup>", 
+                                    `<ul>
+                                        <li>Generally lasts 4-19+ hours</li>
+                                        <li>Second time mothers generally less</li>
+                                        <li> Early Labor
+                                            <ul>
+                                                <li>~4-12 hours</li>
+                                                <li>Happens at home</li>
+                                                <li>Cervix: 4-6cm</li>
+                                            </ul>
+                                        </li>
+                                        <li> Active Labor
+                                            <ul>
+                                                <li>~4-8 hours</li>
+                                                <li>Happens in hospotal</li>
+                                                <li>Cervix: 4-9.9cm</li>
+                                                <li>Baby begins to move down</li>
+                                            </ul>
+                                        </li>
+                                    </ul>`
+                                ),
+                                new suggestionLine(
+                                    "Stage 2: Pushing & Birth", 
+                                    `<ul>
+                                        <li>Cerix: 10cm dilated</li>
+                                        <li>Contractions every 2-5mins, lasting 60-90secs</li>
+                                    </ul>`
+                                ),
+                                new suggestionLine(
+                                    "Stage 3: Delivery of Placenta", 
+                                    `<ul>
+                                        <li>Lasts about 20 mins/li>
+                                    </ul>`
+                                )
                             ]
                     }),
                     new WidgetVM({
@@ -258,7 +410,10 @@
                         title: "Breast Feeding & Storage",
                         iconClass: "fa-person-breastfeeding",
                         tips: [
-                                new suggestionLine("Refrigerating", "Up to 24 hours"),
+                                new suggestionLine(
+                                    "Refrigerating <sup><a href='https://www.cdc.gov/breastfeeding/recommendations/handling_breastmilk.htm' target='_blank'>1</a></sup>", 
+                                    "Up to 24 hours"
+                                ),
                                 new suggestionLine("Freezing", "Up to 12 months. Best to use after 6 months."),
                                 new suggestionLine("Thawing", "Place milk in pouch or bottle in bowl of warm water. Never thaw in Microwave."),
                                 new suggestionLine("Combining", "Freshly expressed milk can be added to existing milk (TODO: check stipulations)"),
@@ -590,7 +745,7 @@
       {
         const listItems = props.tips && props.tips.map((tip) =>
             <li className="list-group-item">
-                <strong>{tip.title}</strong> <span dangerouslySetInnerHTML={{__html: tip.body}}></span>
+                <strong dangerouslySetInnerHTML={{__html: tip.title}}></strong> <span dangerouslySetInnerHTML={{__html: tip.body}}></span>
             </li>
         );
          
