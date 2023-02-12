@@ -11,7 +11,7 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet" href="styles.css">
 <body>   
     <header>
     <div class="bg-light collapse" id="navbarHeader">
@@ -71,6 +71,14 @@
         </div>
     </footer>
 
+    <button
+        type="button"
+        class="btn btn-secondary btn-floating btn-lg"
+        id="btn-back-to-top"
+        >
+  <i class="fa fa-arrow-up"></i>
+</button>
+
 
       <!-- Load React. -->
     <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
@@ -85,6 +93,7 @@
         * TODO:
         * - Only store preferences of widgets that have changed
         * - Quick search
+        * - Add jump to section/widget feature
         * - Better sorting
         * - Email subscription
         * - Finish subclassing all widgets
@@ -99,6 +108,7 @@
                 this.tips = params.tips;
                 this.sortorder = 0;
                 this.hidden = false;
+                this.searchValue = null;
             }
         }
 
@@ -634,17 +644,39 @@
 
         let resortWidgets = function(){
             var matchingBoard = premadeBoards.filter(b => b.value == selectedBoard)[0];
+            var shouldPerformSearchFilter = searchValue !== null && searchValue !== undefined && searchValue != "";
+            var valueToSearch = shouldPerformSearchFilter ? searchValue.toLowerCase() : searchValue;
+            console.log("Searching for", valueToSearch);
 
-            const sorted = [...widgets.filter(w => {
-                        return !matchingBoard || matchingBoard.includedWidgetCategories.includes(w.category);
+            const sortedAndFiltered = [...widgets.filter(w => {
+                        console.log("w.title", w.title);
+                        console.log("w.tips", w.tips);
+
+                        var matchesSelectedBoard = (!matchingBoard || matchingBoard.includedWidgetCategories.includes(w.category));
+                        console.log("matched selected board", matchesSelectedBoard);
+                        
+                        var widgetTitleMeetsSearchCriteria = w.title.toLowerCase().includes(valueToSearch);
+                        var widgetContentMeetsSearchCriteria = w.tips != null && w.tips.find(t => (t.title && t.title.toLowerCase().includes(valueToSearch)) || (t.body && t.body.toLowerCase().includes(valueToSearch)));
+                        
+                        console.log("widgetTitleMeetsSearchCriteria", widgetTitleMeetsSearchCriteria);
+                        console.log("widgetContentMeetsSearchCriteria", widgetContentMeetsSearchCriteria);
+                        w.searchValue = valueToSearch;
+                        
+                        var meetsSearchFilterCriteria = (!shouldPerformSearchFilter
+                                || widgetTitleMeetsSearchCriteria
+                                || widgetContentMeetsSearchCriteria
+                            );
+                        console.log("meetsSearchFilterCriteria", meetsSearchFilterCriteria);
+
+                        return matchesSelectedBoard && meetsSearchFilterCriteria;
                     })
                 ]
                 .sort((widget1, widget2) => widget1.sortorder - widget2.sortorder);
 
 
-            console.table(sorted);
-            setWidgetsToDisplay(sorted);
-            preferencesRepository.save(sorted, selectedBoard);
+            console.table(sortedAndFiltered);
+            setWidgetsToDisplay(sortedAndFiltered);
+            preferencesRepository.save(sortedAndFiltered, selectedBoard);
         }
 
         let resetPreferences = function(){
@@ -693,6 +725,27 @@
             setDisplayHeader(!!!displayHeader);
         }
 
+        const [searchValue, setSearchValue] = React.useState("");
+        let searchChanged = function(event){
+            setSearchValue(event.target.value);
+        }
+        React.useEffect(() => {
+            resortWidgets();
+        }, [searchValue])
+
+        const [jumpToCategoryId, setJumpToCategoryId] = React.useState();
+        let jumpToChanged = function(event){
+            setJumpToCategoryId(event.target.value);
+        }
+        React.useEffect(() => {
+            if(!jumpToCategoryId || jumpToCategoryId =="") return;
+            var url = location.href;               //Save down the URL without hash.
+            location.href = "#"+jumpToCategoryId;                 //Go to the target element.
+            history.replaceState(null,null,url);   //Don't like hashes. Changing it back.
+
+            setJumpToCategoryId("");
+        }, [jumpToCategoryId])
+
         return (
             <React.Fragment>
                 <section className="py-1 text-center container">
@@ -723,24 +776,37 @@
                             </button>
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <div className="col-lg-2 col-sm-6 col-12 my-2">
+                            <input type="search" className="form-control" value={searchValue} onChange={searchChanged} placeholder="Type to search..."></input>
+                        </div>
+                        <div className="col-lg-2 col-sm-6 col-12 my-2">
+                            <select className="form-select" value={jumpToCategoryId} onChange={jumpToChanged}>
+                                <option value="">Jump to</option>
+                                {widgetsToDisplay.filter(widget => widget.hidden === false).map((widget) => 
+                                    <option value={widget.category.id}>{widget.title}</option>
+                                )} 
+                            </select>
+                        </div>
+                    </div>
                 </section>
 
                 <div className="album py-1 bg-light">
                     <div className="container-fluid">   
                         <div className="row pb-3">
-                            <div className="col-lg-8 col-sm-6 col-12">
+                            <div className="col-lg-8 col-sm-6 col-12 my-2">
                                 <div className="row">
                                     <div className="col-lg-2 col-12">
                                         <label className="form-label">Hidden Widgets</label>
                                     </div>
-                                    <div className="col-lg-10 col-12 g-0">
+                                    <div className="col-lg-10 col-12">
                                         {widgetsToDisplay.filter(widget => widget.hidden === true).map((widget) => 
                                             <button className="btn btn-sm btn-outline-secondary" onClick={() => unhide(widget)}><i className="fa fa-eye" style={{cursor:"pointer"}}></i> {widget.title}</button>
                                         )} 
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-4 col-sm-6 col-12">
+                            <div className="col-lg-4 col-sm-6 col-12 my-2">
                                 <div className="row">
                                     <div className="col-lg-4 col-12">
                                         <label className="form-label">Premade Boards</label>
@@ -756,11 +822,11 @@
                                 </div>
                             </div>
                         </div>
-                            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">           
-                                {widgetsToDisplay.filter(widget => widget.hidden === false).map((widget) => 
-                                    <InfoCard {...widget} onSortChanged={widgetOrderChanged} onHide={hide}></InfoCard>
-                                )} 
-                            </div>    
+                        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">           
+                            {widgetsToDisplay.filter(widget => widget.hidden === false).map((widget) => 
+                                <InfoCard {...widget} onSortChanged={widgetOrderChanged} onHide={hide}></InfoCard>
+                            )} 
+                        </div>    
                     </div>
                 </div>
                 
@@ -777,69 +843,86 @@
 
       function InfoCard(props) 
       {
-        const listItems = props.tips && props.tips.map((tip) =>
-            <li className="list-group-item">
-                <strong dangerouslySetInnerHTML={{__html: tip.title}}></strong> <span dangerouslySetInnerHTML={{__html: tip.body}}></span>
-            </li>
-        );
-         
-        
+            let meetsSearchCriteria = (searchValue, tip) => {
+                if(props.searchValue == null || props.searchValue == undefined || props.searchValue == "") return true;
 
-        let upArrow = function()
-        {
-            props.onSortChanged(props, "up");
-        }
+                if(tip){
+                    var titleMeetsSearchCriteria = tip.title && tip.title.toLowerCase().includes(props.searchValue.toLowerCase());
+                    var bodyMeetsSearchCriteria = tip.body && tip.body.toLowerCase().includes(props.searchValue.toLowerCase());
 
-        let downArrow = function()
-        {
-            props.onSortChanged(props, "down");
+                    return titleMeetsSearchCriteria || bodyMeetsSearchCriteria;
 
-        }
+                }
 
-        let leftArrow = function()
-        {
-            props.onSortChanged(props, "left");
+                return false;
+            }
 
-        }
+            const listItems = props.tips && props.tips.map((tip) =>
+                <li className="list-group-item">
+                    {meetsSearchCriteria(props.searchValue, tip)
+                        ?  <React.Fragment><strong dangerouslySetInnerHTML={{__html: tip.title}}></strong> <span dangerouslySetInnerHTML={{__html: tip.body}}></span></React.Fragment>
+                        : "..."
+                    }
 
-        let rightArrow = function()
-        {
-            props.onSortChanged(props, "right");
-        }
+                </li>
+            );
+            
+            
 
-        const [contentHidden, setContentHidden] = React.useState(false);
-        let minimize = function(){
-            setContentHidden(!!!contentHidden);
-        }
+            let upArrow = function()
+            {
+                props.onSortChanged(props, "up");
+            }
 
-        return  (
-            <div className="col">
-                <div className="card">
-                    <div className="card-header text-white bg-primary">
-                        <div className="float-start">
-                            <h5 className="text-center">
-                                <i className={"fa " + props.iconClass + " text-start"}></i> {props.title}
-                            </h5>
+            let downArrow = function()
+            {
+                props.onSortChanged(props, "down");
+
+            }
+
+            let leftArrow = function()
+            {
+                props.onSortChanged(props, "left");
+
+            }
+
+            let rightArrow = function()
+            {
+                props.onSortChanged(props, "right");
+            }
+
+            const [contentHidden, setContentHidden] = React.useState(false);
+            let minimize = function(){
+                setContentHidden(!!!contentHidden);
+            }
+
+            return  (
+                <div className="col">
+                    <div className="card" id={props.category.id}>
+                        <div className="card-header text-white bg-primary">
+                            <div className="float-start">
+                                <h5 className="text-center">
+                                    <i className={"fa " + props.iconClass + " text-start"}></i> {props.title}
+                                </h5>
+                            </div>
+                            <div className="float-end">
+                                <i className="fa fa-arrow-left p-2" style={{cursor: "pointer"}} onClick={leftArrow}></i>          
+                                <i className="fa fa-arrow-up p-2" style={{cursor: "pointer"}} onClick={upArrow}></i>
+                                <i className="fa fa-arrow-down p-2" style={{cursor: "pointer"}} onClick={downArrow}></i>
+                                <i className="fa fa-arrow-right p-2" style={{cursor: "pointer"}} onClick={rightArrow}></i> 
+                                <i className="fa fa-window-minimize p-2" title="minimize" style={{cursor: "pointer"}} onClick={minimize}></i> 
+                                <i className="fa fa-eye-slash p-2" style={{cursor: "pointer"}} onClick={() => props.onHide(props)}></i> 
+                            </div>
                         </div>
-                        <div className="float-end">
-                            <i className="fa fa-arrow-left p-2" style={{cursor: "pointer"}} onClick={leftArrow}></i>          
-                            <i className="fa fa-arrow-up p-2" style={{cursor: "pointer"}} onClick={upArrow}></i>
-                            <i className="fa fa-arrow-down p-2" style={{cursor: "pointer"}} onClick={downArrow}></i>
-                            <i className="fa fa-arrow-right p-2" style={{cursor: "pointer"}} onClick={rightArrow}></i> 
-                            <i className="fa fa-window-minimize p-2" title="minimize" style={{cursor: "pointer"}} onClick={minimize}></i> 
-                            <i className="fa fa-eye-slash p-2" style={{cursor: "pointer"}} onClick={() => props.onHide(props)}></i> 
+                        <ul className={"list-group list-group-flush" + (contentHidden ? " d-none" : "")}>
+                            {listItems}
+                        </ul>
+                        <div className="card-footer text-white bg-primary text-muted text-center">
+                            {props.footer}
                         </div>
-                    </div>
-                    <ul className={"list-group list-group-flush" + (contentHidden ? " d-none" : "")}>
-                        {listItems}
-                    </ul>
-                    <div className="card-footer text-white bg-primary text-muted text-center">
-                        {props.footer}
                     </div>
                 </div>
-            </div>
-        )
-
+            )
       }
 
       const container = document.getElementById('main');
