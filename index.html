@@ -14,7 +14,7 @@
 
 <body>   
     <header>
-    <div class="bg-light collapse" id="navbarHeader" style="">
+    <div class="bg-light collapse" id="navbarHeader">
         <div class="container">
         <div class="row">
             <div class="col-sm-8 col-md-7 py-4">
@@ -36,7 +36,7 @@
     </div>
     <div class="navbar navbar-dark bg-primary shadow-sm">
         <div class="container">
-        <a href="#" class="navbar-brand d-flex align-items-center">
+        <a href="./index.html" class="navbar-brand d-flex align-items-center">
             <i class="fa fa-children"></i>
             <strong>Parenting Reference Site</strong>
         </a>
@@ -47,16 +47,28 @@
     </div>
     </header>
 
-    <main id="main"></main>
+    <main id="main">
+        <div class="container text-center min-vh-100 ">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-center align-middle py-5">
+                        <div class="spinner-border spinner-border-lg" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <footer class="text-muted py-3">
-    <div class="container">
-        <p class="float-end mb-1">
-        <a href="#">Back to top</a>
-        </p>
-        <p class="mb-1">Parenting Reference Site is © 2023 by some new parent</p>
-        <p class="mb-1"><strong>Disclaimer: </strong>All information presented on this site is not endorsed by medical professionals, has not been confirmed beyond looking up references from our own sources, and should be used at your own risk. You agree to use or not use these tips at your own risk and will not hold this site or its owners or creators liable in any case or for any reason.</p> 
-    </div>
+        <div class="container">
+            <p class="float-end mb-1">
+            <a href="#">Back to top</a>
+            </p>
+            <p class="mb-1">Parenting Reference Site is © 2023 by some new parent</p>
+            <p class="mb-1"><strong>Disclaimer: </strong>All information presented on this site is not endorsed by medical professionals, has not been confirmed beyond looking up references from our own sources, and should be used at your own risk. You agree to use or not use these tips at your own risk and will not hold this site or its owners or creators liable in any case or for any reason.</p> 
+        </div>
     </footer>
 
 
@@ -676,42 +688,64 @@
             resortWidgets();
         }, [selectedBoard])
 
+        const [displayHeader, setDisplayHeader] = React.useState(false);
+        let minimizeHeader = function(){
+            setDisplayHeader(!!!displayHeader);
+        }
+
         return (
             <React.Fragment>
                 <section className="py-1 text-center container">
-                    <div className="row py-lg-1">
+                    <div className={"row py-lg-1" + (displayHeader ? "" : " d-none")}>
                         <div className="col-lg-6 col-md-8 mx-auto">
                             <h1 className="fw-light">Parenting & Child Tips, Now</h1>
-                            <p className="lead text-muted">Help when you need it. We offer quick reference parenting & child tips all in one place. Simple and easy to use. Organize. Search. Bookmark. Print.</p>
-                            <a href="#" className="btn btn-primary my-2" onClick={() => window.print()}>Print Page</a>
-                            <a href="#" className="btn btn-secondary my-2">Submit Tip</a>
-                            <a href="#" className="btn btn-light my-2" onClick={bookmark}>Bookmark</a>
-                            <a href="#" className="btn btn-outline-secondary my-2" onClick={resetPreferences}>Reset Preferences</a>
+                            <p className="lead text-muted">Help when you need it. We offer quick reference parenting & child tips all in one place. Simple and easy to use. Organize. Search. Bookmark. Print.</p> 
                         </div>                      
+                    </div>
+                    <div className="row">
+                        <i className="fa fa-window-minimize" title="minimize" style={{cursor: "pointer"}} onClick={minimizeHeader}></i> 
+                    </div>
+                </section>
+                <section className="text-center">
+                    <div className="row">
+                        <div className="col">
+                            <button type="button" className="btn btn-secondary btn-block col-lg-2 col-sm-6 col-12 m-2" onClick={() => window.print()}>
+                               <i className="fa fa-print"></i> Print
+                            </button>
+                            <button type="button" className="btn btn-secondary btn-block col-lg-2 col-sm-6 col-12 m-2" onClick={bookmark}>
+                                <i className="fa fa-bookmark"></i> Bookmark
+                            </button>
+                            <button type="button" className="btn btn-secondary btn-block col-lg-2 col-sm-6 col-12 m-2" onClick={resetPreferences}>
+                                <i className="fa fa-rotate-left"></i> Reset Preferences
+                            </button>
+                            <button type="button" className="btn btn-outline-secondary btn-block col-lg-2 col-sm-6 col-12 m-2">
+                                <i className="fa fa-square-arrow-up-right"></i> Submit Tip
+                            </button>
+                        </div>
                     </div>
                 </section>
 
                 <div className="album py-1 bg-light">
                     <div className="container-fluid">   
                         <div className="row pb-3">
-                            <div className="col-8">
+                            <div className="col-lg-8 col-sm-6 col-12">
                                 <div className="row">
-                                    <div className="col-2 g-1">
-                                    <label className="form-label">Hidden Widgets</label>
+                                    <div className="col-lg-2 col-12">
+                                        <label className="form-label">Hidden Widgets</label>
                                     </div>
-                                    <div className="col-10 g-0">
+                                    <div className="col-lg-10 col-12 g-0">
                                         {widgetsToDisplay.filter(widget => widget.hidden === true).map((widget) => 
                                             <button className="btn btn-sm btn-outline-secondary" onClick={() => unhide(widget)}><i className="fa fa-eye" style={{cursor:"pointer"}}></i> {widget.title}</button>
                                         )} 
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-4">
+                            <div className="col-lg-4 col-sm-6 col-12">
                                 <div className="row">
-                                    <div className="col-4">
-                                    <label className="form-label">Premade Boards</label>
+                                    <div className="col-lg-4 col-12">
+                                        <label className="form-label">Premade Boards</label>
                                     </div>
-                                    <div className="col-8">
+                                    <div className="col-lg-8 col-12">
                                         <select className="form-select" onChange={onPremadeBoardSelectionChange} value={selectedBoard}>
                                             <option value=""></option>
                                             {premadeBoards.map(premadeBoard => 
@@ -811,6 +845,7 @@
       const container = document.getElementById('main');
       const root = ReactDOM.createRoot(container);
       root.render(<MyApp />);
+
 
     </script>
 </body>
