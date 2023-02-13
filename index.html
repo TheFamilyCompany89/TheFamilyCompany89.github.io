@@ -862,16 +862,19 @@
 
                 return false;
             }
+            
 
             React.useEffect(() => {
                 var context = document.querySelectorAll(".searchable-content");
                 var instance = new Mark(context);
 
+                instance.unmark();
+
                 if(props.searchValue == null || props.searchValue == undefined || props.searchValue == "") 
-                    instance.unmark();
+                    return;
                 else
                     instance.mark(props.searchValue, {
-                        accuracy:"exactly"
+                        accuracy:"partially"
                     });
             }, [props.searchValue]);
 
