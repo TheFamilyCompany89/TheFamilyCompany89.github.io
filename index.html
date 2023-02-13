@@ -646,27 +646,19 @@
             var matchingBoard = premadeBoards.filter(b => b.value == selectedBoard)[0];
             var shouldPerformSearchFilter = searchValue !== null && searchValue !== undefined && searchValue != "";
             var valueToSearch = shouldPerformSearchFilter ? searchValue.toLowerCase() : searchValue;
-            console.log("Searching for", valueToSearch);
 
             const sortedAndFiltered = [...widgets.filter(w => {
-                        console.log("w.title", w.title);
-                        console.log("w.tips", w.tips);
-
                         var matchesSelectedBoard = (!matchingBoard || matchingBoard.includedWidgetCategories.includes(w.category));
-                        console.log("matched selected board", matchesSelectedBoard);
-                        
+
                         var widgetTitleMeetsSearchCriteria = w.title.toLowerCase().includes(valueToSearch);
                         var widgetContentMeetsSearchCriteria = w.tips != null && w.tips.find(t => (t.title && t.title.toLowerCase().includes(valueToSearch)) || (t.body && t.body.toLowerCase().includes(valueToSearch)));
                         
-                        console.log("widgetTitleMeetsSearchCriteria", widgetTitleMeetsSearchCriteria);
-                        console.log("widgetContentMeetsSearchCriteria", widgetContentMeetsSearchCriteria);
                         w.searchValue = valueToSearch;
                         
                         var meetsSearchFilterCriteria = (!shouldPerformSearchFilter
                                 || widgetTitleMeetsSearchCriteria
                                 || widgetContentMeetsSearchCriteria
                             );
-                        console.log("meetsSearchFilterCriteria", meetsSearchFilterCriteria);
 
                         return matchesSelectedBoard && meetsSearchFilterCriteria;
                     })
@@ -674,7 +666,6 @@
                 .sort((widget1, widget2) => widget1.sortorder - widget2.sortorder);
 
 
-            console.table(sortedAndFiltered);
             setWidgetsToDisplay(sortedAndFiltered);
             preferencesRepository.save(sortedAndFiltered, selectedBoard);
         }
@@ -710,13 +701,10 @@
         }
 
         let onPremadeBoardSelectionChange = function(event){
-            console.log("Board changed", event.target.value);
             setSelectedBoard(event.target.value);
         }
 
         React.useEffect(() => {
-            console.log("Board State changed", selectedBoard);
-
             resortWidgets();
         }, [selectedBoard])
 
@@ -791,16 +779,16 @@
                         </div> 
                         <div className="accordion-item">
                             <h2 className="accordion-header" id="headingThree">
-                                <button className="accordion-button collapsed p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <button className="accordion-button p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                                     Search, Jump To, Premade Boards
                                 </button>
                             </h2>
-                            <div id="collapseThree" className="accordion-collapse collapse p-2" aria-labelledby="headingThree">
+                            <div id="collapseThree" className="accordion-collapse collapse show p-2" aria-labelledby="headingThree">
                                 <div className="row justify-content-center">
-                                    <div className="col-lg-2 col-sm-6 col-12 py-2">
+                                    <div className="col-lg-3 col-sm-6 col-12 py-2">
                                         <input type="search" className="form-control" value={searchValue} onChange={searchChanged} onKeyUp={searchKeyUp} placeholder="Type to search..."></input>
                                     </div>
-                                    <div className="col-lg-2 col-sm-6 col-12 py-2">
+                                    <div className="col-lg-3 col-sm-6 col-12 py-2">
                                         <select className="form-select" value={jumpToCategoryId} onChange={jumpToChanged}>
                                             <option value="">Jump to</option>
                                             {widgetsToDisplay.filter(widget => widget.hidden === false).map((widget) => 
@@ -808,11 +796,9 @@
                                             )} 
                                         </select>
                                     </div>
-                                </div>
-                                <div className="row justify-content-center">
-                                    <div className="col-lg-4 col-sm-6 col-12 my-2">
+                                    <div className="col-lg-3 col-sm-6 col-12 my-2">
                                         <div className="row">
-                                            <div className="col-lg-8 col-12">
+                                            <div className="col-12">
                                                 <select className="form-select" onChange={onPremadeBoardSelectionChange} value={selectedBoard}>
                                                     <option value="">View Premade Board</option>
                                                     {premadeBoards.map(premadeBoard => 
@@ -822,12 +808,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-8 col-sm-6 col-12 my-2">
+                                    <div className="col-lg-3 col-sm-6 col-12 my-2">
                                         <div className="row">
-                                            <div className="col-lg-2 col-12">
+                                            <div className="col-12">
                                                 <label className="form-label">Hidden Widgets</label>
                                             </div>
-                                            <div className="col-lg-10 col-12">
+                                            <div className="col-lg-10 col-sm-6 col-12">
                                                 {widgetsToDisplay.filter(widget => widget.hidden === true).map((widget) => 
                                                     <button className="btn btn-sm btn-outline-secondary" onClick={() => unhide(widget)}><i className="fa fa-eye" style={{cursor:"pointer"}}></i> {widget.title}</button>
                                                 )} 
