@@ -124,8 +124,51 @@
             static CPRAndChoking = new WidgetCategory(7);
             static SignLanguage = new WidgetCategory(8);
             static ParentChecklistMonth1 = new WidgetCategory(70);
+            static ParentChecklistMonth2 = new WidgetCategory(71);
+            static ParentChecklistMonth3 = new WidgetCategory(72);
+            static ParentChecklistMonth4 = new WidgetCategory(73);
+            static ParentChecklistMonth5 = new WidgetCategory(74);
+            static ParentChecklistMonth6 = new WidgetCategory(75);
+            static ParentChecklistMonth7 = new WidgetCategory(76);
+            static ParentChecklistMonth8 = new WidgetCategory(77);
+            static ParentChecklistMonth9 = new WidgetCategory(78);
+            static ParentChecklistMonth10 = new WidgetCategory(79);
+            static ParentChecklistMonth11 = new WidgetCategory(80);
+            static ParentChecklistMonth12 = new WidgetCategory(81);
+            static ParentChecklistYears1to3 = new WidgetCategory(82);
+            static ParentChecklistYears3to5 = new WidgetCategory(83);
             static MilestoneMonth1 = new WidgetCategory(90);
-            static ActivtiesMonth1 = new WidgetCategory(100);
+            static MilestoneMonth2 = new WidgetCategory(91);
+            static MilestoneMonth3 = new WidgetCategory(92);
+            static MilestoneMonth4 = new WidgetCategory(93);
+            static MilestoneMonth5 = new WidgetCategory(94);
+            static MilestoneMonth6 = new WidgetCategory(95);
+            static MilestoneMonth7 = new WidgetCategory(96);
+            static MilestoneMonth8 = new WidgetCategory(97);
+            static MilestoneMonth9 = new WidgetCategory(98);
+            static MilestoneMonth10 = new WidgetCategory(99);
+            static MilestoneMonth11 = new WidgetCategory(100);
+            static MilestoneMonth12 = new WidgetCategory(101);
+            static ActivtiesMonth1 = new WidgetCategory(110);
+            static ActivtiesMonth2 = new WidgetCategory(111);
+            static ActivtiesMonth3 = new WidgetCategory(112);
+            static ActivtiesMonth4 = new WidgetCategory(113);
+            static ActivtiesMonth5 = new WidgetCategory(114);
+            static ActivtiesMonth6 = new WidgetCategory(115);
+            static ActivtiesMonth7 = new WidgetCategory(116);
+            static ActivtiesMonth8 = new WidgetCategory(117);
+            static ActivtiesMonth9 = new WidgetCategory(118);
+            static ActivtiesMonth10 = new WidgetCategory(119);
+            static ActivtiesMonth11 = new WidgetCategory(120);
+            static ActivtiesMonth12 = new WidgetCategory(121);
+            static ActivtiesYears1To3 = new WidgetCategory(122);
+            static ActivtiesYears3to5 = new WidgetCategory(123);
+            static ActivtiesYears5to8 = new WidgetCategory(124);
+            static ActivtiesYears8to12 = new WidgetCategory(125);
+            static ActivtiesTeens = new WidgetCategory(126);
+            static FeedingToddler = new WidgetCategory(130);
+            static CPRAndChokingToddler = new WidgetCategory(131);
+            static CPRAndChokingChild = new WidgetCategory(132);
 
             constructor(id){
                 this.id = id;
@@ -158,7 +201,7 @@
                             "Perineal Massage",
                             "Helps to prevent tearing <sup><a href='https://americanpregnancy.org/healthy-pregnancy/labor-and-birth/perineal-massage-pregnancy/' target='_blank'>1</a</sup>"
                         ),
-                        new suggestionLine("When to go to the hospital", "Longer, stronger contractions. 4 minutes apart, lasting 1 minute, for 1 hour"),
+                        new suggestionLine("When to go to the hospital - Remember 4-1-1", "Longer, stronger contractions. 4 minutes apart, lasting 1 minute, for 1 hour"),
                         new suggestionLine(
                             "False Labor (Braxton Hicks)",
                             "Irregular in duration & intensity. Infrequent & unpredictable. <sup><a href='https://www.ncbi.nlm.nih.gov/books/NBK470546/' target='_blank'>1</a></sup>"
@@ -283,94 +326,108 @@
                 let allWidgets = [
                     new BeforeBirthWidget(),
                     new WidgetVM({
-                        category: WidgetCategory.Birth,
-                        title: "Birth",
-                        iconClass: "fa-baby",
+                        category: WidgetCategory.BeforeBirth,
+                        title: "Hospital Bag List - Mom",
+                        iconCLass: "fa-suitcase",
                         tips: [
-                                new suggestionLine(
-                                    "Mom Hospital Bag List", 
-                                    `<ul>
-                                        <li>
-                                            Paperwork
-                                            <ul>
-                                                <li>IDentification</li>
-                                                <li>Insurance Card</li>
-                                                <li>Birth plan</li>
-                                                <li>Pediatrician Contact Information</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            Clothing
-                                            <ul>
-                                                <li>Nursing Bra</li>
-                                                <li>Pajamas</li>
-                                                <li>Robe</li>
-                                                <li>Comfortable going home outfit</li>
-                                                <li>Slipper Socks</li>
-                                                <li>Slip on shoes</li>
-                                                <li>Shower shoes</li>
-                                                <li>Disposable Underwear</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            Toiletries
-                                            <ul>
-                                                <li>Toothbrush</li>
-                                                <li>Toothpaste</li>
-                                                <li>Soap</li>
-                                                <li>Makeup Wipes</li>
-                                                <li>Deoderant</li>
-                                                <li>Hair ties/headband</li>
-                                                <li>Hair comb/brush</li>
-                                                <li>Lip balm</li>
-                                                <li>Lotion</li>
-                                                <li>Glasses/contacts</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            Postpartum Needs - Most hospitals provide
-                                            <ul>
-                                                <li>Nipple Cream</li>
-                                                <li>Nipple Pads</li>
-                                                <li>Adult Diapers</li>
-                                                <li>Heavy,Medium,Light pads</li>
-                                                <li>Peri bottle</li>
-                                                <li>Perineal Spray</li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            Extras
-                                            <ul>
-                                                <li>Phone</li>
-                                                <li>Long charging cable</li>
-                                                <li>Water Bottle</li>
-                                                <li>Pillow?</li>
-                                                <li>Bath towel?</li>
-                                            </ul>
-                                        </li>
-                                    </ul>`
-                                ),
-                                new suggestionLine(
-                                    "Baby Hospital Bag List", 
-                                    `<ul>
-                                        <li>Car Seat</li>
-                                        <li>Going Home Outfit</li>
-                                    </ul>`
-                                ), 
-                                new suggestionLine(
-                                    "Dad Hospital Bag List", 
-                                    `<ul>
-                                        <li>Clothes</li>
-                                        <li>Pajamas</li>
-                                        <li>Pillow</li>
-                                        <li>Sheets</li>
-                                        <li>Toiletries</li>
-                                        <li>Watter Bottle</li>
-                                        <li>Phone</li>
-                                        <li>Long charger</li>
-                                        <li>Snacks</li>
-                                    </ul>`
-                                ),                               
+                        new suggestionLine(
+                                "Mom Hospital Bag List", 
+                                `<ul>
+                                    <li>
+                                        Paperwork
+                                        <ul>
+                                            <li>IDentification</li>
+                                            <li>Insurance Card</li>
+                                            <li>Birth plan</li>
+                                            <li>Pediatrician Contact Information</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        Clothing
+                                        <ul>
+                                            <li>Nursing Bra</li>
+                                            <li>Pajamas</li>
+                                            <li>Robe</li>
+                                            <li>Comfortable going home outfit</li>
+                                            <li>Slipper Socks</li>
+                                            <li>Slip on shoes</li>
+                                            <li>Shower shoes</li>
+                                            <li>Disposable Underwear</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        Toiletries
+                                        <ul>
+                                            <li>Toothbrush</li>
+                                            <li>Toothpaste</li>
+                                            <li>Soap</li>
+                                            <li>Makeup Wipes</li>
+                                            <li>Deoderant</li>
+                                            <li>Hair ties/headband</li>
+                                            <li>Hair comb/brush</li>
+                                            <li>Lip balm</li>
+                                            <li>Lotion</li>
+                                            <li>Glasses/contacts</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        Postpartum Needs - Most hospitals provide
+                                        <ul>
+                                            <li>Nipple Cream</li>
+                                            <li>Nipple Pads</li>
+                                            <li>Adult Diapers</li>
+                                            <li>Heavy,Medium,Light pads</li>
+                                            <li>Peri bottle</li>
+                                            <li>Perineal Spray</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        Extras
+                                        <ul>
+                                            <li>Phone</li>
+                                            <li>Long charging cable</li>
+                                            <li>Water Bottle</li>
+                                            <li>Pillow?</li>
+                                            <li>Bath towel?</li>
+                                        </ul>
+                                    </li>
+                                </ul>`
+                            )
+                        ]
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.BeforeBirth,
+                        title: "Hospital Bag List - Dad & Baby",
+                        iconClass: "fa-suitcase",
+                        tips: [
+                            new suggestionLine(
+                                "Baby Hospital Bag List", 
+                                `<ul>
+                                    <li>Car Seat</li>
+                                    <li>Going Home Outfit</li>
+                                </ul>`
+                            ), 
+                            new suggestionLine(
+                                "Dad Hospital Bag List", 
+                                `<ul>
+                                    <li>Clothes</li>
+                                    <li>Pajamas</li>
+                                    <li>Pillow</li>
+                                    <li>Sheets</li>
+                                    <li>Toiletries</li>
+                                    <li>Watter Bottle</li>
+                                    <li>Phone</li>
+                                    <li>Long charger</li>
+                                    <li>Snacks</li>
+                                </ul>`
+                            ),                     
+                        ]
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.Birth,
+                        title: "Birthing Breathing Techniques",
+                        iconClass: "fa-baby",
+                        tips: [                                        
                                 new suggestionLine("Breathing Technique 1", "In, hold, out. Do at beginning and end of contraction."),
                                 new suggestionLine("Feather Breathing", "During a contraction. Hee, hee, hoo"),
                             ]
@@ -395,7 +452,7 @@
                                         <li> Active Labor
                                             <ul>
                                                 <li>~4-8 hours</li>
-                                                <li>Happens in hospotal</li>
+                                                <li>Happens in hospital</li>
                                                 <li>Cervix: 4-9.9cm</li>
                                                 <li>Baby begins to move down</li>
                                             </ul>
@@ -405,7 +462,7 @@
                                 new suggestionLine(
                                     "Stage 2: Pushing & Birth", 
                                     `<ul>
-                                        <li>Cerix: 10cm dilated</li>
+                                        <li>Cervix: 10cm dilated</li>
                                         <li>Contractions every 2-5mins, lasting 60-90secs</li>
                                     </ul>`
                                 ),
@@ -450,17 +507,35 @@
                                 new suggestionLine("Always place on back", "Tight fitting sheets. Nothing else in crib."),
                                 new suggestionLine("Prevent Flat Head", "Rotate head to face different direction every other night"),
                                 new suggestionLine("Placing them down", "Place baby's butt first, then head when putting them down"),
+                                new suggestionLine("Pacifier while sleeping?", "Yes, it's safe."),
                             ]
                     }),
                     new WidgetVM({
                         category: WidgetCategory.DiaperChanging,
-                        title: "Diaper Changing",
-                        iconClass: "fa-person-booth"
+                        title: "Diaper Changing <a href='https://www.cdc.gov/hygiene/childcare/childcare.html' target='_blank'><sup>1</sup></a>",
+                        iconClass: "fa-person-booth",
+                        tips: [
+                            new suggestionLine("Always keep at least one hand on baby when changing."),
+                            new suggestionLine("Never look away for too long."),
+                            new suggestionLine("Step 1", "Prepare all your supplies nearby. Clean diaper, wipes, diaper cream, etc."),
+                            new suggestionLine("Step 2", "Lay baby on back & undress"),
+                            new suggestionLine("Undressing tip", "Lift baby's shirt above their arms so they can't reach at you while changing."),
+                            new suggestionLine("Step 3", "Open new diaper (make sure fully open) and place underneath current diaper"),
+                            new suggestionLine("Step 4", "Unfasten diaper. Slowly lower the diaper."),
+                            new suggestionLine("Don't get peed on tip", "When exposed to cold air, baby may pee, so be prepared to cover quickly with old diaper"),
+                            new suggestionLine("Step 5", "Lift child's butt by grabbing both ankles and lifting. Clean child. Always wipe fromt to back."),
+                            new suggestionLine("Step 6", "Placed used wipes in soiled diaper. Pull soiled diaper away and close up."),
+                            new suggestionLine("Step 7", "Apply diaper cream if needed. Lower child's legs"),
+                            new suggestionLine("Step 8", "Fasten new diaper. Should be at the baby's belly button."),
+                            new suggestionLine("Step 9", "Dispose of old diaper."),
+                            new suggestionLine("Step 10", "Wash your hands")
+                        ]
                     }),
                     new WidgetVM({
                         category: WidgetCategory.Swaddling,
                         title: "Swaddling",
-                        iconClass: "fa-shirt"
+                        iconClass: "fa-shirt",
+
                     }),
                     new WidgetVM({
                         category: WidgetCategory.ParentChecklistMonth1,
@@ -473,34 +548,190 @@
                         iconClass: "fa-list-ol"
                     }),
                     new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth2,
+                        title: "Milestones - Month 2",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth3,
+                        title: "Milestones - Month 3",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth4,
+                        title: "Milestones - Month 4",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth5,
+                        title: "Milestones - Month 5",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth6,
+                        title: "Milestones - Month 6",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth7,
+                        title: "Milestones - Month 7",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth8,
+                        title: "Milestones - Month 8",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth9,
+                        title: "Milestones - Month 9",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth10,
+                        title: "Milestones - Month 10",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth11,
+                        title: "Milestones - Month 11",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.MilestoneMonth12,
+                        title: "Milestones - Month 12",
+                        iconClass: "fa-list-ol"
+                    }),
+                    new WidgetVM({
                         category: WidgetCategory.ActivtiesMonth1,
                         title: "Activities - Month 1",
                         iconClass: "fa-child-reaching"
                     }),
                     new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth2,
+                        title: "Activities - Month 2",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth3,
+                        title: "Activities - Month 3",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth4,
+                        title: "Activities - Month 4",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth5,
+                        title: "Activities - Month 5",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth6,
+                        title: "Activities - Month 6",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth7,
+                        title: "Activities - Month 7",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth8,
+                        title: "Activities - Month 8",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth9,
+                        title: "Activities - Month 9",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth10,
+                        title: "Activities - Month 10",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth11,
+                        title: "Activities - Month 11",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesMonth12,
+                        title: "Activities - Month 12",
+                        iconClass: "fa-child-reaching"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesYears1To3,
+                        title: "Activities - Years 1-3",
+                        iconClass: "fa-child"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesYears3to5,
+                        title: "Activities - Years 3-5",
+                        iconClass: "fa-child"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesYears5to8,
+                        title: "Activities - Years 5-8",
+                        iconClass: "fa-child"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesYears8to12,
+                        title: "Activities - Years 8-12",
+                        iconClass: "fa-person"
+                    }),
+                    new WidgetVM({
+                        category: WidgetCategory.ActivtiesTeens,
+                        title: "Activities - Teens",
+                        iconClass: "fa-person"
+                    }),
+                    new WidgetVM({
                         category: WidgetCategory.CPRAndChoking,
-                        title: "CPR & Choking",
+                        title: "Baby First Aid - CPR & Choking",
                         iconClass: "fa-lungs",
                         tips: [
                             new suggestionLine(
                                 "Choking", 
-                                `<ol>
-                                    <li>Flip baby over on stomach on your forearm</li>
+                                `
+                                <a href='https://youtube.com/watch?v=ePodw7L_mFM&si=EnSIkaIECMiOmarE' target='_blank'>Video</a>
+                                <ol>
+                                    <li><strong>Method 1</strong></li>
+                                    <li>Flip baby over on stomach, facing towards the ground, resting them on your forearm</li>
                                     <li>Angle down towards ground at 45 degree angle</li>
-                                    <li>Use hand to slap their back</li>
+                                    <li><strong>Give multiple back blows</strong> Using palm of hand, hit between shoulder blades</li>
+                                    <li><strong>Method 2</strong></li>
+                                    <li>Flip baby on back, facing towards ceiling, resting on surface or your</li>
+                                    <li>Position two fingers in middle of baby's chest</li>
+                                    <li>Press down, giving chest thrusts</li>
                                 </ol>`
                             ),
                             new suggestionLine(
                                 "CPR", 
-                                `<ol>
+                                `
+                                <a href='https://youtube.com/watch?v=n65HW1iJUuY&si=EnSIkaIECMiOmarE' target='_blank'>Video</a>
+                                <ol>
+                                    <li>Call out for help to have someone dial 911</li>
                                     <li>Lay baby face up on flat surface</li>
                                     <li>Press on forehead and lift bottom of chin to angle head back</li>
-                                    <li>Align two fingers (pointer and index) slightly below chest (even with nipples, move down a bit)</li>
-                                    <li>Press firmly 12? times</li>
                                     <li>Check for breathing by putting cheek to their noise and mouth</li>
                                     <li>If not breathing, place lips around nose and their mouth and breath out deeply twice (their chest should rise)</li>
+                                    <li>Align two fingers (pointer and index) slightly below chest (even with nipples, move down a bit)</li>
+                                    <li>Press firmly 30 times at a rate of 100 compressions/minute</li>
                                     <li>Repeat pushes and breathes until breathing resumes or medical help arrives</li>
                                 </ol>`
+                            ),
+                            new suggestionLine(
+                                "Item/Object lodged in nose",
+                                `<ul>
+                                    <li><strong>Perform mother's breath</strong></li>
+                                    <li><strong>Close unobstructed nostril</strong> Using finger, press on nostril that is unblocked so it is sealed</li>
+                                    <li><strong>Open child's mouth</strong></li>
+                                    <li><strong>Press your lips up to theirs</strong></li>
+                                    <li><strong>Give a big breath/blow out</strong></li>
+                                    <li><strong>Item should dislodge</strong></li>
+                                </ul>`
                             )
                         ]
                     }),
@@ -601,14 +832,100 @@
             }),
             new preMadeBoard({
                 value: 3,
-                text: "3-6 Month Old",
+                text: "1-3 Months Old",
                 includedWidgetCategories: [
                     WidgetCategory.Feeding,
                     WidgetCategory.BreastFeeding,
                     WidgetCategory.DiaperChanging,
                     WidgetCategory.Sleeping,
                     WidgetCategory.CPRAndChoking,
-                    WidgetCategory.SignLanguage
+                    WidgetCategory.SignLanguage,
+                    WidgetCategory.ParentChecklistMonth2,
+                    WidgetCategory.MilestoneMonth2,
+                    WidgetCategory.ActivtiesMonth2,
+                    WidgetCategory.ParentChecklistMonth3,
+                    WidgetCategory.MilestoneMonth3,
+                    WidgetCategory.ActivtiesMonth3
+                ]
+            }),
+            new preMadeBoard({
+                value: 4,
+                text: "4-6 Months Old",
+                includedWidgetCategories: [
+                    WidgetCategory.Feeding,
+                    WidgetCategory.BreastFeeding,
+                    WidgetCategory.DiaperChanging,
+                    WidgetCategory.Sleeping,
+                    WidgetCategory.CPRAndChoking,
+                    WidgetCategory.SignLanguage,
+                    WidgetCategory.ParentChecklistMonth4,
+                    WidgetCategory.MilestoneMonth4,
+                    WidgetCategory.ActivtiesMonth4,
+                    WidgetCategory.ParentChecklistMonth5,
+                    WidgetCategory.MilestoneMonth5,
+                    WidgetCategory.ActivtiesMonth5,
+                    WidgetCategory.ParentChecklistMonth6,
+                    WidgetCategory.MilestoneMonth6,
+                    WidgetCategory.ActivtiesMonth6
+                ]
+            }),
+            new preMadeBoard({
+                value: 5,
+                text: "7-12 Months Old",
+                includedWidgetCategories: [
+                    WidgetCategory.Feeding,
+                    WidgetCategory.BreastFeeding,
+                    WidgetCategory.DiaperChanging,
+                    WidgetCategory.Sleeping,
+                    WidgetCategory.CPRAndChoking,
+                    WidgetCategory.SignLanguage,
+                    WidgetCategory.ParentChecklistMonth7,
+                    WidgetCategory.MilestoneMonth7,
+                    WidgetCategory.ActivtiesMonth7,
+                    WidgetCategory.ParentChecklistMonth8,
+                    WidgetCategory.MilestoneMonth8,
+                    WidgetCategory.ActivtiesMonth8,
+                    WidgetCategory.ParentChecklistMonth9,
+                    WidgetCategory.MilestoneMonth9,
+                    WidgetCategory.ActivtiesMonth9,
+                    WidgetCategory.ParentChecklistMonth10,
+                    WidgetCategory.MilestoneMonth10,
+                    WidgetCategory.ActivtiesMonth10,
+                    WidgetCategory.ParentChecklistMonth11,
+                    WidgetCategory.MilestoneMonth11,
+                    WidgetCategory.ActivtiesMonth11,
+                    WidgetCategory.ParentChecklistMonth12,
+                    WidgetCategory.MilestoneMonth12,
+                    WidgetCategory.ActivtiesMonth12
+                ]
+            }),
+            new preMadeBoard({
+                value: 6,
+                text: "Toddler - 1-5 years",
+                includedWidgetCategories: [
+                    WidgetCategory.FeedingToddler,
+                    WidgetCategory.CPRAndChokingToddler,
+                    WidgetCategory.ParentChecklistYears1to3,
+                    WidgetCategory.ActivtiesYears1To3,
+                    WidgetCategory.ActivtiesYears3to5,
+                ]
+            }),
+            new preMadeBoard({
+                value: 7,
+                text: "Child - 5-12 years",
+                includedWidgetCategories: [
+                    WidgetCategory.FeedingToddler,
+                    WidgetCategory.CPRAndChokingChild,
+                    WidgetCategory.ParentChecklistYears3to5,
+                    WidgetCategory.ActivtiesYears5to8,
+                    WidgetCategory.ActivtiesYears8to12,
+                ]
+            }),
+            new preMadeBoard({
+                value: 8,
+                text: "Teen - 13+",
+                includedWidgetCategories: [
+                    WidgetCategory.ActivtiesTeens
                 ]
             })
         ];
@@ -811,10 +1128,10 @@
                                     </div>
                                     <div className="col-lg-3 col-sm-6 col-12 my-2">
                                         <div className="row">
-                                            <div className="col-12">
+                                            <div className="col-lg-4 col-sm-6 col-12">
                                                 <label className="form-label">Hidden Widgets</label>
                                             </div>
-                                            <div className="col-lg-10 col-sm-6 col-12">
+                                            <div className="col-lg-8 col-sm-6 col-12">
                                                 {widgetsToDisplay.filter(widget => widget.hidden === true).map((widget) => 
                                                     <button className="btn btn-sm btn-outline-secondary" onClick={() => unhide(widget)}><i className="fa fa-eye" style={{cursor:"pointer"}}></i> {widget.title}</button>
                                                 )} 
@@ -926,7 +1243,7 @@
                         <div className="card-header text-white bg-primary">
                             <div className="float-start">
                                 <h5 className="text-center">
-                                    <i className={"fa " + props.iconClass + " text-start"}></i> {props.title}
+                                    <i className={"fa " + props.iconClass + " text-start"}></i> <span dangerouslySetInnerHTML={{__html: props.title}}></span>
                                 </h5>
                             </div>
                             <div className="float-end">
